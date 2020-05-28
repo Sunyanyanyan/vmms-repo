@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.io.Serializable;
 import java.util.Date;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -19,6 +20,7 @@ import lombok.Data;
  */
 @Data
 @TableName("t_repair_shop")
+@ApiModel(value = "维修厂单")
 public class RepairShopEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

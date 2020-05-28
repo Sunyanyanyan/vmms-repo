@@ -4,6 +4,7 @@ import com.zckj.vmms.utils.PageUtils;
 import com.zckj.vmms.utils.R;
 import com.zckj.vmms.vmms.entity.CarEntity;
 import com.zckj.vmms.vmms.service.CarService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("vmms/car")
+@Api(tags = {"车牌号接口"})
 public class CarController {
     @Autowired
     private CarService carService;

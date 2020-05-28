@@ -1,5 +1,7 @@
 package com.zckj.vmms.vmms.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -49,6 +51,7 @@ public class OrderEntity implements Serializable {
 	 * 申请时间（自动获取）
 	 */
 	@ApiModelProperty(name = "applicationTime", value = "申请时间", dataType = "String")
+	@TableField(value = "application_time",fill = FieldFill.INSERT)
 	private String applicationTime;
 	/**
 	 * 申请人姓名（自动获取）

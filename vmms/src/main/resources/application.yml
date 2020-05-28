@@ -17,6 +17,8 @@ mybatis-plus:
       id-type: auto
   type-aliases-package: com.zckj.vmms.vmms.entity
 cbs:
-  imagesPath: file:/E:/fileUpload/
+  imagesPath: file:/D:/fileUpload/
+#absoluteImgPath: D:/fileUpload/images/
+#sonImgPath: /images/
 server:
   port: 7000

@@ -23,7 +23,7 @@ import com.zckj.vmms.utils.R;
  */
 @RestController
 @RequestMapping("vmms/repairshop")
-@Api("维修厂单接口")
+@Api(tags ="维修厂单接口")
 public class RepairShopController {
     @Autowired
     private RepairShopService repairShopService;

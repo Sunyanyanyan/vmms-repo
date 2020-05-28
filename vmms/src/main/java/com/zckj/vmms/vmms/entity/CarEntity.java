@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -18,6 +19,7 @@ import lombok.Data;
  */
 @Data
 @TableName("t_car")
+@ApiModel(value = "车牌号")
 public class CarEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

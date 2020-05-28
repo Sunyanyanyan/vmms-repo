@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.math.BigDecimal;
 import java.io.Serializable;
 import java.util.Date;
+
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 /**
@@ -17,6 +19,7 @@ import lombok.Data;
  */
 @Data
 @TableName("t_detail")
+@ApiModel(value = "维修清单详情")
 public class DetailEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

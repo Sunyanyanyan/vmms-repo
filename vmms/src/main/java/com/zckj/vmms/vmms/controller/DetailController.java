@@ -3,6 +3,7 @@ package com.zckj.vmms.vmms.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,7 @@ import com.zckj.vmms.utils.R;
  */
 @RestController
 @RequestMapping("vmms/detail")
+@Api(tags = "维修清单详情接口")
 public class DetailController {
     @Autowired
     private DetailService detailService;

@@ -18,6 +18,6 @@ public interface OrderService extends IService<OrderEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
 
-    R saveApply(String attribute, String description);
+    int addApply(String attribute, String description);
 }
 
