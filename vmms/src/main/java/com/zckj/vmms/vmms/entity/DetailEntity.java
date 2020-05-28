@@ -9,29 +9,33 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * 备件
+ * 维修清单详情
  * 
  * @author sunyan
  * @email syan_2019@163.com
- * @date 2020-05-22 16:42:59
+ * @date 2020-05-27 09:54:06
  */
 @Data
-@TableName("t_part")
-public class PartEntity implements Serializable {
+@TableName("t_detail")
+public class DetailEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 
+	 * 主键编号
 	 */
 	@TableId
-	private String partId;
+	private Integer detailId;
 	/**
-	 * 
+	 * 所属工单编号（自动生成）
 	 */
-	private String partName;
+	private Integer orderId;
 	/**
-	 * 
+	 * 项目名称
 	 */
-	private BigDecimal partPrice;
+	private String item;
+	/**
+	 * 项目费用
+	 */
+	private BigDecimal itemBill;
 
 }

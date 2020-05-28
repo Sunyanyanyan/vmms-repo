@@ -106,12 +106,13 @@
             <version>1.2.58</version>
         </dependency>
 
-        <!-- swgger2 -->
+        <!--swagger-->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>2.9.2</version>
         </dependency>
+
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
@@ -166,7 +167,12 @@
             <version>1.5.1</version>
         </dependency>
 
-
+        <!--日期时间工具-->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.10.1</version>
+        </dependency>
 
 
         <!-- redis-->
