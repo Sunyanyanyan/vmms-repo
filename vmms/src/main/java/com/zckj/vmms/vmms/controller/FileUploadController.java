@@ -14,7 +14,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 
-@Api(tags = "上传图片至云服务器")
+/**
+ * 上传文件
+ */
+@Api(tags = "上传图片")
 @CrossOrigin//跨域
 @RestController
 @RequestMapping("/vmms/order")
@@ -32,11 +35,12 @@ public class FileUploadController {
             @ApiParam(name = "startTime", value = "维修前照片拍摄时间") @RequestParam(value = "startTime") String startTime,
             @ApiParam(name = "file", value = "维修前照片") @RequestParam("file") MultipartFile file) {
         OrderEntity orderEntity = new OrderEntity();
-//        orderEntity.setOrderId(1);
+
         orderEntity.setLongitude(longitude);
         orderEntity.setLatitude(latitude);
         orderEntity.setStartTime(startTime);
 
+        //获取上传文件路径
         String url = FileUploadUtil.uploadFile(file);
 
         //文件URL存入数据库表
@@ -44,7 +48,6 @@ public class FileUploadController {
         boolean flag = orderService.save(orderEntity);
 
         if (flag) {
-//            Collection<OrderEntity> orderEntities = orderService.list();
             return R.ok().put("添加成功", true);
         } else {
             return R.ok().put("添加失败", null);

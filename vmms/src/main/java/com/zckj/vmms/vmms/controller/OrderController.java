@@ -1,6 +1,5 @@
 package com.zckj.vmms.vmms.controller;
 
-import com.zckj.vmms.utils.FileUploadUtil;
 import com.zckj.vmms.utils.R;
 import com.zckj.vmms.vmms.entity.OrderEntity;
 import com.zckj.vmms.vmms.service.OrderService;
@@ -8,9 +7,7 @@ import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,6 +26,7 @@ import java.util.List;
 public class OrderController {
     @Autowired
     private OrderService orderService;
+
 
     /**
      * 所有工单列表
@@ -66,6 +64,8 @@ public class OrderController {
             @ApiImplicitParam(name = "description", value = "故障描述", dataType = "String")
     })
     public R addApply(@RequestParam String attribute, @RequestParam(required = false) String description) {
+
+
         int result = orderService.addApply(attribute, description);
         if (result > 0) {
             return R.ok();

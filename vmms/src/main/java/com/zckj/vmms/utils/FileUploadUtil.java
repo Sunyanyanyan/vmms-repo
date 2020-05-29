@@ -29,16 +29,13 @@ public class FileUploadUtil {
         if (file.isEmpty()) {
             return "文件为空";
         } else {
-
             //保存时的文件名
             DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
             Calendar calendar = Calendar.getInstance();
             String timeName = df.format(calendar.getTime());
             //文件重新命名
-            Date dt = new Date();
             Random random = new Random();
-            String fileNameAuto = String.format("_%X", new Object[]{
-                    new Integer(random.nextInt())});
+            String fileNameAuto = String.format("_%X", random.nextInt());
             String name = file.getOriginalFilename();
             int pos = name.lastIndexOf(".");
             //获取文件名后缀Fi
