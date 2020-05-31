@@ -41,7 +41,6 @@ public class OrderController {
     }
 
 
-
     /**
      * 信息
      */
@@ -87,7 +86,7 @@ public class OrderController {
     @PutMapping(value = "/update", produces = {"application/json;charset=UTF-8"})
     @ApiOperation(value = "根据工单id更新")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "orderId", value = "主键编号", dataType = "Integer",required = true),
+            @ApiImplicitParam(name = "orderId", value = "主键编号", dataType = "Integer", required = true),
 //            @ApiImplicitParam(name = "shopId", value = "维修厂编号", dataType = "Integer"),
 //            @ApiImplicitParam(name = "carId", value = "车牌号", dataType = "String"),
 //            @ApiImplicitParam(name = "regionNumber", value = "车辆所属单位编号", dataType = "String"),
@@ -108,7 +107,7 @@ public class OrderController {
     })
     public R updateOrder(OrderEntity order) {
         boolean flag = orderService.updateById(order);
-        if (flag){
+        if (flag) {
             return R.ok("更新成功");
         }
 
@@ -117,33 +116,48 @@ public class OrderController {
 
     /**
      * 图片上传
-     *
-     * @param orderId
-     * @param file
+     * @param orderId   主键编号
+     * @param beforeImg 维修前照片
+     * @param damageImg 损坏件照片
+     * @param afterImg  维修后照片
      * @return
      */
     @ApiOperation(value = "图片上传")
     @PostMapping(value = "/upload", produces = "application/json;charset=UTF-8")
     public R uploadImg(
             @ApiParam(name = "orderId", value = "主键编号") @RequestParam(value = "orderId") Integer orderId,
-            @ApiParam(name = "file", value = "维修前照片") @RequestParam("file") MultipartFile file) {
-
+            @ApiParam(name = "beforeImg", value = "维修前照片") @RequestParam(value = "beforeImg", required = false) MultipartFile beforeImg,
+            @ApiParam(name = "damageImg", value = "损坏件照片") @RequestParam(value = "damageImg", required = false) MultipartFile damageImg,
+            @ApiParam(name = "afterImg", value = "维修后照片") @RequestParam(value = "afterImg",required = false) MultipartFile afterImg) {
 
 
         OrderEntity orderEntity = new OrderEntity();
 
         orderEntity.setOrderId(orderId);
 
-        //获取上传文件路径
-        String url = FileUploadUtil.uploadFile(file);
-
-        //文件URL存入数据库表
-        orderEntity.setBeforeImgUrl(url);
-        orderEntity.setStatus("待修理");
-
-        orderService.updateById(orderEntity);
-
-        return R.ok().put("url", url);
+        //获取上传文件路径，并将路径存入数据库表
+        if (beforeImg != null) {
+            String beforeImgUrl = FileUploadUtil.uploadFile(beforeImg);
+            orderEntity.setBeforeImgUrl(beforeImgUrl);
+            orderEntity.setStatus("待修理");
+            orderService.updateById(orderEntity);
+            return R.ok().put("beforeImgUrl", beforeImgUrl);
+        }
+        if (damageImg != null) {
+            String damageImgUrl = FileUploadUtil.uploadFile(damageImg);
+            orderEntity.setDamageImgUrl(damageImgUrl);
+            orderEntity.setStatus("修理中");
+            orderService.updateById(orderEntity);
+            return R.ok().put("damageImgUrl", damageImgUrl);
+        }
+        if (afterImg != null) {
+            String afterImgUrl = FileUploadUtil.uploadFile(afterImg);
+            orderEntity.setAfterImgUrl(afterImgUrl);
+            orderEntity.setStatus("修理完成");
+            orderService.updateById(orderEntity);
+            return R.ok().put("afterImgUrl", afterImgUrl);
+        }
+        return R.error("未上传图片");
     }
 
     /**
@@ -155,7 +169,6 @@ public class OrderController {
 
         return R.ok();
     }
-
 
 
 //    @PutMapping("uploadImg")
