@@ -25,7 +25,8 @@
         <result property="latitude" column="latitude"/>
     </resultMap>
 
-    <select id="queryLastId" resultType="java.lang.String">
+
+    <select id="queryMaxOrderId" resultType="string">
         SELECT MAX(order_id) FROM `t_order`
     </select>
 

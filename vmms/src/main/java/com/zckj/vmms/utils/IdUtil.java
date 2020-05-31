@@ -7,13 +7,13 @@ import java.util.Date;
 
 public class IdUtil {
     /**
-     * 自定义主键：年份+5位流水号
+     * 自定义主键：年份+5位流水号，如：202000001
      * @param lastId   最后一条记录主键值
      * @return
      */
-    public static Integer getNewId(int lastId){
+    public static Integer getOrderId(int lastId){
         String lastIdStr = String.valueOf(lastId);
-//        String yearStr = lastIdStr.substring(0, 4);
+        //舍弃前4位
         String serialStr = lastIdStr.substring(4);
         Date date = DateUtil.date();
         String yearStr = String.valueOf(DateUtil.year(date));
@@ -31,8 +31,17 @@ public class IdUtil {
         return Integer.parseInt(newSerialStr);
     }
 
-    public static void main(String[] args) {
-        Integer equipmentNo = IdUtil.getNewId(202099999);
-        System.out.println("生成设备编号：" + equipmentNo);
+    /**
+     * 自定义主键：3位流水号，如：101
+     * @param lastId   最后一条记录主键值
+     * @return
+     */
+    public static Integer getDetailId(int lastId){
+        if (lastId == 999){
+            lastId = 0;
+        }
+        lastId++;
+        String format = String.format("%03d", lastId);
+        return  Integer.parseInt(format);
     }
 }

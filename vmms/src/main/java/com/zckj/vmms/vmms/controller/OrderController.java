@@ -1,5 +1,6 @@
 package com.zckj.vmms.vmms.controller;
 
+import com.zckj.vmms.utils.FileUploadUtil;
 import com.zckj.vmms.utils.R;
 import com.zckj.vmms.vmms.entity.OrderEntity;
 import com.zckj.vmms.vmms.service.OrderService;
@@ -7,6 +8,7 @@ import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,51 +40,6 @@ public class OrderController {
         return R.ok().put("list", list);
     }
 
-    /**
-     * 维修申请
-     */
-//    @PostMapping(value = "/save/apply", produces = {"application/json;charset=UTF-8"})
-//    @ApiOperation(value = "维修申请")
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "attribute", value = "维修性质", dataType = "String", required = true),
-//            @ApiImplicitParam(name = "description", value = "故障描述", dataType = "String")
-//    })
-//    public R addApply(OrderEntity orderEntity) {
-//        orderService.save(orderEntity);
-////        int result = orderService.addApply(attribute, description);
-//
-//        return R.ok();
-//    }
-
-    /**
-     * 维修申请
-     */
-    @PostMapping(value = "/save/apply", produces = {"application/json;charset=UTF-8"})
-    @ApiOperation(value = "维修申请")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "attribute", value = "维修性质", dataType = "String", required = true),
-            @ApiImplicitParam(name = "description", value = "故障描述", dataType = "String")
-    })
-    public R addApply(@RequestParam String attribute, @RequestParam(required = false) String description) {
-
-
-        int result = orderService.addApply(attribute, description);
-        if (result > 0) {
-            return R.ok();
-        }
-        return R.error("申请失败");
-    }
-
-
-    /**
-     * 列表
-     */
-//    @GetMapping("/list")
-//    public R listOrder(@RequestParam Map<String, Object> params) {
-//        PageUtils page = orderService.queryPage(params);
-//
-//        return R.ok().put("page", page);
-//    }
 
 
     /**
@@ -96,29 +53,97 @@ public class OrderController {
     }
 
     /**
-     * 保存
+     * 维修申请
      */
     @PostMapping(value = "/save", produces = {"application/json;charset=UTF-8"})
-    @ApiModelProperty(value = "添加工单", notes = "以实体类为参数")
-    public R saveOrder(@RequestBody OrderEntity order) {
-        orderService.save(order);
+    @ApiOperation(value = "维修申请")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "attribute", value = "维修性质", dataType = "String", required = true),
+            @ApiImplicitParam(name = "description", value = "故障描述", dataType = "String")
+    })
+    public R saveOrder(@RequestParam String attribute, @RequestParam(required = false) String description) {
 
-        return R.ok();
+        int result = orderService.saveOrder(attribute, description);
+        if (result > 0) {
+            return R.ok("申请成功");
+        }
+        return R.error("申请失败");
     }
+
+//    /**
+//     * 保存
+//     */
+//    @PostMapping(value = "/save", produces = {"application/json;charset=UTF-8"})
+//    @ApiOperation(value = "添加工单", notes = "以实体类为参数")
+//    public R saveOrder(@RequestBody OrderEntity order) {
+//        orderService.save(order);
+//
+//        return R.ok();
+//    }
 
     /**
      * 修改
      */
     @PutMapping(value = "/update", produces = {"application/json;charset=UTF-8"})
-    @ApiOperation(value = "更新维修工单")
+    @ApiOperation(value = "根据工单id更新")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "attribute", value = "维修性质", dataType = "String", required = true),
-            @ApiImplicitParam(name = "description", value = "故障描述", dataType = "String")
+            @ApiImplicitParam(name = "orderId", value = "主键编号", dataType = "Integer",required = true),
+//            @ApiImplicitParam(name = "shopId", value = "维修厂编号", dataType = "Integer"),
+//            @ApiImplicitParam(name = "carId", value = "车牌号", dataType = "String"),
+//            @ApiImplicitParam(name = "regionNumber", value = "车辆所属单位编号", dataType = "String"),
+//            @ApiImplicitParam(name = "applicationTime", value = "申请时间", dataType = "String"),
+            @ApiImplicitParam(name = "name", value = "申请人姓名", dataType = "String"),
+            @ApiImplicitParam(name = "applicantNumber", value = "申请人编号", dataType = "String"),
+//            @ApiImplicitParam(name = "status", value = "状态[待审批；不同意；待修理；修理中；修理完成]", dataType = "String"),
+//            @ApiImplicitParam(name = "attribute", value = "维修性质", dataType = "String"),
+//            @ApiImplicitParam(name = "beforeImgUrl", value = "维修前照片", dataType = "String"),
+//            @ApiImplicitParam(name = "afterImgUrl", value = "维修后照片", dataType = "String"),
+//            @ApiImplicitParam(name = "damageImgUrl", value = "损坏件照片", dataType = "String"),
+//            @ApiImplicitParam(name = "description", value = "故障描述（非必填）", dataType = "String"),
+//            @ApiImplicitParam(name = "startTime", value = "维修开始时间", dataType = "String"),
+//            @ApiImplicitParam(name = "endTime", value = "维修结束时间", dataType = "String"),
+//            @ApiImplicitParam(name = "exportStatus", value = "导出标志[0-未导出；1-导出]", dataType = "Integer"),
+//            @ApiImplicitParam(name = "longitude", value = "经度", dataType = "BigDecimal"),
+//            @ApiImplicitParam(name = "latitude", value = "纬度", dataType = "BigDecimal")
     })
-    public R updateOrder(@RequestBody OrderEntity order) {
-        orderService.updateById(order);
+    public R updateOrder(OrderEntity order) {
+        boolean flag = orderService.updateById(order);
+        if (flag){
+            return R.ok("更新成功");
+        }
 
-        return R.ok();
+        return R.error("更新失败");
+    }
+
+    /**
+     * 图片上传
+     *
+     * @param orderId
+     * @param file
+     * @return
+     */
+    @ApiOperation(value = "图片上传")
+    @PostMapping(value = "/upload", produces = "application/json;charset=UTF-8")
+    public R uploadImg(
+            @ApiParam(name = "orderId", value = "主键编号") @RequestParam(value = "orderId") Integer orderId,
+            @ApiParam(name = "file", value = "维修前照片") @RequestParam("file") MultipartFile file) {
+
+
+
+        OrderEntity orderEntity = new OrderEntity();
+
+        orderEntity.setOrderId(orderId);
+
+        //获取上传文件路径
+        String url = FileUploadUtil.uploadFile(file);
+
+        //文件URL存入数据库表
+        orderEntity.setBeforeImgUrl(url);
+        orderEntity.setStatus("待修理");
+
+        orderService.updateById(orderEntity);
+
+        return R.ok().put("url", url);
     }
 
     /**
@@ -130,5 +155,13 @@ public class OrderController {
 
         return R.ok();
     }
+
+
+
+//    @PutMapping("uploadImg")
+//    public R uploadjdt(@RequestParam("pic") MultipartFile[] multipartFile, String picture) {
+//        orderService.uploadImg(multipartFile,picture);
+//        return result;
+//    }
 
 }

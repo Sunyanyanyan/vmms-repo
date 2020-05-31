@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.Map;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +32,33 @@ public class DetailController {
     private DetailService detailService;
 
     /**
+     * 修改
+     */
+    @PutMapping(value = "/update", produces = {"application/json;charset=UTF-8"})
+    @ApiOperation(value = "根据维修清单id更新")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "detailId", value = "主键", dataType = "Integer",required = true),
+            @ApiImplicitParam(name = "item", value = "项目名称", dataType = "String"),
+            @ApiImplicitParam(name = "itemBill", value = "项目费用", dataType = "BigDecimal")
+    })
+    public R update(/*@RequestBody*/ DetailEntity detail){
+        boolean flag = detailService.updateById(detail);
+
+        if (flag){
+            return R.ok("更新成功");
+        }
+        return R.error("更新失败");
+    }
+
+//    @GetMapping("/test")
+//    public R testByWrapper() {
+//
+//        detailService.testByWrapper();
+//
+//        return R.ok();
+//    }
+
+    /**
      * 列表
      */
     @GetMapping("/list")
@@ -52,22 +82,19 @@ public class DetailController {
     /**
      * 保存
      */
-    @PostMapping("/save")
-    public R save(@RequestBody DetailEntity detail){
-		detailService.save(detail);
+//    @PostMapping(value = "/save", produces = {"application/json;charset=UTF-8"})
+//    @ApiOperation(value = "维修清单")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "item", value = "项目名称", dataType = "String"),
+//            @ApiImplicitParam(name = "itemBill", value = "项目费用", dataType = "BigDecimal")
+//    })
+//    public R saveDetail(/*@RequestBody */DetailEntity detail){
+//		detailService.saveDetail(detail);
+//
+//        return R.ok();
+//    }
 
-        return R.ok();
-    }
 
-    /**
-     * 修改
-     */
-    @PutMapping("/update")
-    public R update(@RequestBody DetailEntity detail){
-		detailService.updateById(detail);
-
-        return R.ok();
-    }
 
     /**
      * 删除

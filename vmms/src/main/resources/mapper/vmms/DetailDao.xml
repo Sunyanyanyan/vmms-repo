@@ -3,7 +3,7 @@
 
 <mapper namespace="com.zckj.vmms.vmms.dao.DetailDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.zckj.vmms.vmms.entity.DetailEntity" id="detailMap">
         <result property="detailId" column="detail_id"/>
         <result property="orderId" column="order_id"/>
@@ -11,5 +11,13 @@
         <result property="itemBill" column="item_bill"/>
     </resultMap>
 
+    <!--    插入数据sql-->
+<!--    <insert id="insert" parameterType="com.zckj.vmms.vmms.entity.DetailEntity">-->
+<!--        insert into t_detail (order_id, item, item_bill) values (#{order_id}, #{item}, #{item_bill})-->
+<!--    </insert>-->
+    
+    <select id="queryMaxDetailId" resultType="string">
+        SELECT MAX(detail_id) FROM `t_detail`
+    </select>
 
 </mapper>

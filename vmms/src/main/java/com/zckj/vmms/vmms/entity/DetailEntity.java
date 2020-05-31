@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -24,21 +25,25 @@ public class DetailEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 主键编号
+	 * 维修清单主键编号
 	 */
 	@TableId
+	@ApiModelProperty(value = "维修清单主键编号")
 	private Integer detailId;
 	/**
 	 * 所属工单编号（自动生成）
 	 */
+	@ApiModelProperty(value = "所属工单编号(外键)")
 	private Integer orderId;
 	/**
 	 * 项目名称
 	 */
+	@ApiModelProperty(value = "项目名称")
 	private String item;
 	/**
 	 * 项目费用
 	 */
+	@ApiModelProperty(value = "项目费用")
 	private BigDecimal itemBill;
 
 }

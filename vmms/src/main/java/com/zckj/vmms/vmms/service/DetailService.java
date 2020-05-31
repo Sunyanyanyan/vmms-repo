@@ -15,6 +15,10 @@ import java.util.Map;
  */
 public interface DetailService extends IService<DetailEntity> {
 
+//    void testByWrapper();
+
     PageUtils queryPage(Map<String, Object> params);
+
+    int saveDetail(DetailEntity detail);
 }
 
