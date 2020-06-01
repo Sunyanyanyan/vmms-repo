@@ -50,7 +50,7 @@ public class FileUploadUtil {
 //            log.info("realPath:"+realPath);
 //            String filePath = realPath + "WEB-INF"+File.separator + "classes" + File.separator +"static" + File.separator + "resource" + File.separator+fileName;
 
-            String filePath = "D:/fileUpload/" + fileName;
+            String filePath = "/usr/images/" + fileName;
             log.info("绝对路径:" + filePath);
             File newFile = new File(filePath);
 
@@ -61,10 +61,14 @@ public class FileUploadUtil {
                 file.transferTo(newFile);
 
                 //数据库存储的相对路径
-                String projectPath = servletContext.getContextPath();
+                String projectPath = null;
+                if (servletContext != null) {
+                    projectPath = servletContext.getContextPath();
+                }
                 HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
                 String contextpath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + projectPath;
                 //url="http://你自己的域名/项目名/images/"+fileName;//正式项目
+//                url="http://iknowyou.ml:8866/vmms/images/"+fileName;//正式项目
                 url = contextpath + "/images/" + fileName;//本地运行项目
                 log.info("保存文件路径：" + filePath);
                 log.info("相对路径:" + url);

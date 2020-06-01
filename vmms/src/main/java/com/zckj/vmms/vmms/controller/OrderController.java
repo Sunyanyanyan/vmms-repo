@@ -69,16 +69,6 @@ public class OrderController {
         return R.error("申请失败");
     }
 
-//    /**
-//     * 保存
-//     */
-//    @PostMapping(value = "/save", produces = {"application/json;charset=UTF-8"})
-//    @ApiOperation(value = "添加工单", notes = "以实体类为参数")
-//    public R saveOrder(@RequestBody OrderEntity order) {
-//        orderService.save(order);
-//
-//        return R.ok();
-//    }
 
     /**
      * 修改
@@ -86,7 +76,7 @@ public class OrderController {
     @PutMapping(value = "/update", produces = {"application/json;charset=UTF-8"})
     @ApiOperation(value = "根据工单id更新")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "orderId", value = "主键编号", dataType = "Integer", required = true),
+            @ApiImplicitParam(name = "orderId", value = "主键编号", dataType = "Integer"),
 //            @ApiImplicitParam(name = "shopId", value = "维修厂编号", dataType = "Integer"),
 //            @ApiImplicitParam(name = "carId", value = "车牌号", dataType = "String"),
 //            @ApiImplicitParam(name = "regionNumber", value = "车辆所属单位编号", dataType = "String"),
@@ -102,8 +92,8 @@ public class OrderController {
 //            @ApiImplicitParam(name = "startTime", value = "维修开始时间", dataType = "String"),
 //            @ApiImplicitParam(name = "endTime", value = "维修结束时间", dataType = "String"),
 //            @ApiImplicitParam(name = "exportStatus", value = "导出标志[0-未导出；1-导出]", dataType = "Integer"),
-//            @ApiImplicitParam(name = "longitude", value = "经度", dataType = "BigDecimal"),
-//            @ApiImplicitParam(name = "latitude", value = "纬度", dataType = "BigDecimal")
+            @ApiImplicitParam(name = "longitude", value = "经度", dataType = "BigDecimal"),
+            @ApiImplicitParam(name = "latitude", value = "纬度", dataType = "BigDecimal")
     })
     public R updateOrder(OrderEntity order) {
         boolean flag = orderService.updateById(order);

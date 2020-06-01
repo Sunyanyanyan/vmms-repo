@@ -11,6 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.servlet.MultipartConfigElement;
+import java.util.Objects;
 
 
 //上传配置类
@@ -21,7 +22,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
     /**
      * 在配置文件中配置的文件保存路径
      */
-    @Value("${cbs.imagesPath}")
+    @Value("${img.imagesPath}")
     private String mImagesPath;
 
     @Bean
@@ -36,8 +37,8 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        if(mImagesPath.equals("") || mImagesPath.equals("${cbs.imagesPath}")){
-            String imagesPath = WebAppConfig.class.getClassLoader().getResource("").getPath();
+        if(mImagesPath.equals("") || mImagesPath.equals("${img.imagesPath}")){
+            String imagesPath = Objects.requireNonNull(WebAppConfig.class.getClassLoader().getResource("")).getPath();
             log.info("1.上传配置类imagesPath=="+imagesPath);
             if(imagesPath.indexOf(".jar")>0){
                 imagesPath = imagesPath.substring(0, imagesPath.indexOf(".jar"));

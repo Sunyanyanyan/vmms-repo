@@ -1,8 +1,11 @@
 spring:
   datasource:
     username: root
-    password: root
-    url: jdbc:mysql://localhost:3306/vmm?serverTimezone=GMT%2B8
+#    password: root
+    password: root@123456
+#    url: jdbc:mysql://localhost:3306/vmm?useUnicode=true&characterEncoding=utf8
+ #   url: jdbc:mysql://104.199.189.246:3306/vmm?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://104.199.189.246:3306/vmm?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
     driver-class-name: com.mysql.jdbc.Driver
   profiles:
     active: dev
@@ -11,14 +14,14 @@ mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
   configuration:
     map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     db-config:
       id-type: auto
   type-aliases-package: com.zckj.vmms.vmms.entity
-cbs:
-  imagesPath: file:/D:/fileUpload/
+img:
+  imagesPath: file:/usr/images/
 #absoluteImgPath: D:/fileUpload/images/
 #sonImgPath: /images/
 server:
-  port: 7000
+  port: 8866
