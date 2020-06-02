@@ -47,13 +47,6 @@ public class DetailController {
         return R.error("更新失败");
     }
 
-//    @GetMapping("/test")
-//    public R testByWrapper() {
-//
-//        detailService.testByWrapper();
-//
-//        return R.ok();
-//    }
 
     /**
      * 列表

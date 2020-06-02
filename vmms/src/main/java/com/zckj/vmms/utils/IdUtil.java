@@ -45,7 +45,7 @@ public class IdUtil {
     }
 
     /**
-     * 自定义主键：3位流水号，如：101
+     * 自定义主键：1-999流水号
      *
      * @param lastId 最后一条记录主键值
      * @return
@@ -55,7 +55,7 @@ public class IdUtil {
             lastId = 0;
         }
         lastId++;
-        String format = String.format("%03d", lastId);
-        return Integer.parseInt(format);
+//        String format = String.format("%03d", lastId);
+        return lastId;
     }
 }

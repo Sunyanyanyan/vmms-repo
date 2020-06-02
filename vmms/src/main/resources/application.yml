@@ -20,8 +20,9 @@ mybatis-plus:
       id-type: auto
   type-aliases-package: com.zckj.vmms.vmms.entity
 img:
-  imagesPath: file:/usr/images/
+  imagesPath: file:/D:/fileUpload/  #本地路径
+#  imagesPath: file:/usr/images/  #服务器路径
 #absoluteImgPath: D:/fileUpload/images/
 #sonImgPath: /images/
 server:
-  port: 8866
+  port: 80

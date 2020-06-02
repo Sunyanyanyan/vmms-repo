@@ -49,7 +49,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
             mImagesPath = imagesPath;
         }
         log.info("imagesPath============="+mImagesPath);
-        registry.addResourceHandler("/images/**").addResourceLocations(mImagesPath);
+        registry.addResourceHandler("/vmms/images/**").addResourceLocations(mImagesPath);
         // TODO Auto-generated method stub
         log.info("2.上传配置类mImagesPath=="+mImagesPath+"\n");
         super.addResourceHandlers(registry);

@@ -1,5 +1,6 @@
 package com.zckj.vmms.vmms.controller;
 
+import com.zckj.vmms.utils.wechat.CheckUtil;
 import com.zckj.vmms.utils.FileUploadUtil;
 import com.zckj.vmms.utils.R;
 import com.zckj.vmms.vmms.entity.OrderEntity;
@@ -10,6 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,6 +34,54 @@ import java.util.List;
 public class OrderController {
     @Autowired
     private OrderService orderService;
+
+//    @ApiOperation(value = "微信验证")
+//    @GetMapping("/verify_wx_token")
+//    public void login(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+//        request.setCharacterEncoding("UTF-8");
+//        String signature = request.getParameter("signature");
+//        String timestamp = request.getParameter("timestamp");
+//        String nonce = request.getParameter("nonce");
+//        String echostr = request.getParameter("echostr");
+//        try (PrintWriter out = response.getWriter()) {
+//            if (CheckUtil.checkSignature(signature, timestamp, nonce)) {
+//                out.write(echostr);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+
+
+//    @PostMapping("/verify_wx_token")
+//    public void handler(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//        request.setCharacterEncoding("UTF-8");
+//        response.setCharacterEncoding("UTF-8");
+//        PrintWriter out = response.getWriter();
+//        Map<String, String> parseXml = MessageUtil.parseXml(request);
+//        String msgType = parseXml.get("MsgType");
+//        String content = parseXml.get("Content");
+//        String fromusername = parseXml.get("FromUserName");
+//        String tousername = parseXml.get("ToUserName");
+//        System.out.println(msgType);
+//        System.out.println(content);
+//        System.out.println(fromusername);
+//        System.out.println(tousername);
+//    }
+//    public static Map<String, String> parseXml(HttpServletRequest request) throws Exception {
+//        Map<String, String> map = new HashMap<String, String>();
+//        InputStream inputStream = request.getInputStream();
+//        SAXReader reader = new SAXReader();
+//        Document document = reader.read(inputStream);
+//        Element root = document.getRootElement();
+//        List<Element> elementList = root.elements();
+//        for (Element e : elementList)
+//            map.put(e.getName(), e.getText());
+//        inputStream.close();
+//        inputStream = null;
+//        return map;
+//    }
 
 
     /**

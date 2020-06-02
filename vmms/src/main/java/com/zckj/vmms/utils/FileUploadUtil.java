@@ -1,6 +1,8 @@
 package com.zckj.vmms.utils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,6 +16,7 @@ import java.util.Calendar;
 import java.util.Random;
 
 @Slf4j
+@Configuration
 public class FileUploadUtil {
 
     /**
@@ -23,6 +26,7 @@ public class FileUploadUtil {
      * @return
      */
     public static String uploadFile(MultipartFile file) {
+
 
         String url = null;
 
@@ -42,15 +46,22 @@ public class FileUploadUtil {
             String ext = name.substring(pos);
             String fileName = timeName + fileNameAuto + ext;
 
-            log.info("fileName:"+fileName);
+            log.info("fileName:" + fileName);
             //保存文件的绝对路径
             WebApplicationContext webApplicationContext = (WebApplicationContext) SpringContextUtils.applicationContext;
             ServletContext servletContext = webApplicationContext.getServletContext();
-//            String realPath = servletContext.getRealPath("/");
-//            log.info("realPath:"+realPath);
-//            String filePath = realPath + "WEB-INF"+File.separator + "classes" + File.separator +"static" + File.separator + "resource" + File.separator+fileName;
 
-            String filePath = "/usr/images/" + fileName;
+//            String realPath = servletContext.getRealPath("/");
+//            log.info("realPath:" + realPath);
+//
+//            String dir = realPath + "/images/";
+//            File fileDir = new File(dir);
+//            if (!fileDir.exists()) {
+//                fileDir.mkdirs();
+//            }
+//            String filePath = dir + fileName;
+            String filePath = "D:/fileUpload/" +fileName;//本地路径
+//            String filePath = "/usr/images/" + fileName;//服务器路径
             log.info("绝对路径:" + filePath);
             File newFile = new File(filePath);
 
@@ -61,21 +72,17 @@ public class FileUploadUtil {
                 file.transferTo(newFile);
 
                 //数据库存储的相对路径
-                String projectPath = null;
-                if (servletContext != null) {
-                    projectPath = servletContext.getContextPath();
-                }
+                String projectPath = servletContext.getContextPath();
                 HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
-                String contextpath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + projectPath;
-                //url="http://你自己的域名/项目名/images/"+fileName;//正式项目
-//                url="http://iknowyou.ml:8866/vmms/images/"+fileName;//正式项目
-                url = contextpath + "/images/" + fileName;//本地运行项目
+                String contextPath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + projectPath;
+                // url="http://你自己的域名/项目名/images/"+fileName;//正式项目
+                // url="http://iknowyou.ml:8866/vmms/images/"+fileName;//正式项目
+                url = contextPath + "/vmms/images/" + fileName;
                 log.info("保存文件路径：" + filePath);
                 log.info("相对路径:" + url);
             } catch (IllegalStateException | IOException e) {
                 e.printStackTrace();
             }
-
         }
         return url;
     }
