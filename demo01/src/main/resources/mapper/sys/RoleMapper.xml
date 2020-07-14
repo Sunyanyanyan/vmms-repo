@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zckj.sys.mapper.RoleMapper">
+
+    <!-- 系统登录-查询当前操作员的所有岗位 -->
+    <select id="getRole" resultType="com.zckj.sys.entity.Role">
+        select DISTINCT ROLENAME from role where roleid = #{roleid} and grade=#{grade}
+    </select>
+    <!-- 岗位设置-查询指定级别的所有岗位 -->
+    <select id="listRole" parameterType="int" resultType="com.zckj.sys.entity.Role">
+		select roleid,rolename,grade,ordid from role where grade=#{0} group by
+		roleid,rolename,grade,ordid order by ordid
+	</select>
+
+    <!-- 最大roleid -->
+    <select id="maxRoleId" parameterType="int" resultType="java.lang.String">
+        select max(to_number(roleid))+1 roleid from role where grade=#{0}
+    </select>
+
+    <insert id="insertRole" parameterType="com.zckj.sys.entity.Role">
+		insert into role values
+		(#{roleid},#{moduleid},#{rolename},#{grade},#{ordid})
+	</insert>
+
+    <!-- 删除岗位 -->
+    <delete id="deleteRole" parameterType="com.zckj.sys.entity.Role">
+		delete role where roleid =#{roleid} and grade=#{grade}
+	</delete>
+</mapper>
