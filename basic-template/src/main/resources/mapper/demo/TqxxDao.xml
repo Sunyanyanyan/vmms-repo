@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zckj.demo.dao.TqxxDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.zckj.demo.entity.TqxxEntity" id="tqxxMap">
+        <result property="tgOrgNo" column="TG_ORG_NO"/>
+        <result property="tgOrgNm" column="TG_ORG_NM"/>
+        <result property="tgId" column="TG_ID"/>
+        <result property="tgNo" column="TG_NO"/>
+        <result property="tgNm" column="TG_NM"/>
+        <result property="cap" column="CAP"/>
+        <result property="instAddr" column="INST_ADDR"/>
+        <result property="chgTm" column="CHG_TM"/>
+        <result property="pubPrivDsc" column="PUB_PRIV_DSC"/>
+        <result property="runStDsc" column="RUN_ST_DSC"/>
+        <result property="lineNo" column="LINE_NO"/>
+        <result property="lineNm" column="LINE_NM"/>
+        <result property="pmsLineId" column="PMS_LINE_ID"/>
+        <result property="dataDt" column="DATA_DT"/>
+        <result property="tqjlbh" column="TQJLBH"/>
+        <result property="tqjlxm" column="TQJLXM"/>
+    </resultMap>
+
+
+</mapper>

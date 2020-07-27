@@ -6,7 +6,10 @@ import com.zckj.vmms.utils.R;
 import com.zckj.vmms.vmms.entity.OrderEntity;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,18 +25,8 @@ public interface OrderService extends IService<OrderEntity> {
 
     /**
      * 维修申请
-     * @param attribute
-     * @param description
-     * @return
      */
-    int saveOrder(String attribute, String description);
+    int saveOrder(OrderEntity orderEntity);
 
-    /**
-     * 图片上传
-     * @param multipartFile
-     * @param picture
-     * @return
-     */
-//    R uploadImg(MultipartFile[] multipartFile, String picture);
 }
 

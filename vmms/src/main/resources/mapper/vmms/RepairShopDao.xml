@@ -6,7 +6,7 @@
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.zckj.vmms.vmms.entity.RepairShopEntity" id="repairShopMap">
         <result property="shopId" column="shop_id"/>
-        <result property="shopRegion" column="shop_region"/>
+        <result property="regionNumber" column="shop_region"/>
         <result property="shopAddress" column="shop_address"/>
         <result property="shopName" column="shop_name"/>
         <result property="longitude" column="longitude"/>

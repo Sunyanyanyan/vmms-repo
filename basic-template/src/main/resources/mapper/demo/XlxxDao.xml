@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zckj.demo.dao.XlxxDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.zckj.demo.entity.XlxxEntity" id="xlxxMap">
+        <result property="tgOrgNo" column="TG_ORG_NO"/>
+        <result property="tgOrgNm" column="TG_ORG_NM"/>
+        <result property="gisElecStatNo" column="GIS_ELEC_STAT_NO"/>
+        <result property="gisElecStatNm" column="GIS_ELEC_STAT_NM"/>
+        <result property="linePkId" column="LINE_PK_ID"/>
+        <result property="cmsLineId" column="CMS_LINE_ID"/>
+        <result property="lineNm" column="LINE_NM"/>
+        <result property="lineLen" column="LINE_LEN"/>
+        <result property="shipDt" column="SHIP_DT"/>
+        <result property="sbzrbh" column="SBZRBH"/>
+        <result property="sbzrxm" column="SBZRXM"/>
+    </resultMap>
+
+
+</mapper>

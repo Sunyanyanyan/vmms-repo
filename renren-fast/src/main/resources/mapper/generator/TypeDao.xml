@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.generator.dao.TypeDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.modules.generator.entity.TypeEntity" id="typeMap">
+        <result property="orgno" column="ORGNO"/>
+        <result property="name" column="NAME"/>
+        <result property="note" column="NOTE"/>
+        <result property="tj" column="TJ"/>
+        <result property="ordid" column="ORDID"/>
+    </resultMap>
+
+
+</mapper>

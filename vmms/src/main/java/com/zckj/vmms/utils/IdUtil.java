@@ -55,7 +55,6 @@ public class IdUtil {
             lastId = 0;
         }
         lastId++;
-//        String format = String.format("%03d", lastId);
         return lastId;
     }
 }

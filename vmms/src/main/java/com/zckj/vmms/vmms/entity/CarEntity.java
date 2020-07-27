@@ -32,6 +32,7 @@ public class CarEntity implements Serializable {
 	/**
 	 * 单位编号
 	 */
+	@ApiModelProperty(name = "regionNumber", value = "单位编号", dataType = "String")
 	private String regionNumber;
 
 }

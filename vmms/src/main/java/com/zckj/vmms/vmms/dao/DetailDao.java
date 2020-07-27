@@ -17,26 +17,9 @@ import java.util.List;
 @Mapper
 public interface DetailDao extends BaseMapper<DetailEntity> {
 
-//    int insert();
-
-//    @Results(id = "detailMap", value = {
-//            @Result(property = "detailId", column = "detail_id"),
-//            @Result(property = "item", column = "item"),
-//            @Result(property = "itemBill", column = "item_bill"),
-//            @Result(property = "orderId", column = "order_id", one = @One(select = "com.zckj.vmms.vmms.dao.OrderDao.selectById"))
-//    })
-//    @Select("SELECT * FROM t_detail WHERE detail_id=#{detail_id}")
-//    DetailEntity findStudentById(int id);
-//
-//    @Select("select * from t_detail where 1=1 and " + "${ew.sqlSegment}")
-//    @ResultMap(value = "detailMap")
-//    List<DetailEntity> selectDetail(@Param("ew") QueryWrapper<DetailEntity> wrapper);
-
     /**
      * 查询维修清单最后一条记录的主键值
-     * @return
      */
     String queryMaxDetailId();
-
 
 }

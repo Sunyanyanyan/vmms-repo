@@ -10,14 +10,14 @@
         <result property="carId" column="car_id"/>
         <result property="regionNumber" column="region_number"/>
         <result property="applicationTime" column="application_time"/>
-        <result property="name" column="name"/>
-        <result property="applicantNumber" column="applicant_number"/>
+        <result property="applicantId" column="applicant_id"/>
+        <result property="applicantName" column="applicant_name"/>
         <result property="status" column="status"/>
-        <result property="attribute" column="attribute"/>
         <result property="beforeImgUrl" column="before_img_url"/>
         <result property="afterImgUrl" column="after_img_url"/>
         <result property="damageImgUrl" column="damage_img_url"/>
-        <result property="description" column="description"/>
+        <result property="repairNature" column="repair_nature"/>
+        <result property="repairDesc" column="repair_desc"/>
         <result property="startTime" column="start_time"/>
         <result property="endTime" column="end_time"/>
         <result property="exportStatus" column="export_status"/>

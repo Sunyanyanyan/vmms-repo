@@ -1,15 +1,17 @@
 package com.zckj.vmms.vmms.controller;
 
-import java.util.Arrays;
-import java.util.Map;
+import java.util.List;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.zckj.vmms.vmms.entity.CarEntity;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.zckj.vmms.vmms.entity.RepairShopEntity;
 import com.zckj.vmms.vmms.service.RepairShopService;
-import com.zckj.vmms.utils.PageUtils;
 import com.zckj.vmms.utils.R;
 
 
@@ -32,10 +34,26 @@ public class RepairShopController {
      * 列表
      */
     @GetMapping("/list")
-    public R list(@RequestParam(required = false) Map<String, Object> params){
-        PageUtils page = repairShopService.queryPage(params);
+    public R listRepairShop(){
+        List<RepairShopEntity> list = repairShopService.list(null);
 
-        return R.ok().put("page", page);
+        return R.ok().put("list", list);
+    }
+    /**
+     * 根据单位编号查询
+     */
+    @GetMapping("/findByRegionNumber")
+    @ApiOperation(value = "根据单位编号regionNumber查询")
+    @ApiImplicitParam(name = "regionNumber", value = "单位编号", required = true)
+    public R findByRegionNumber(RepairShopEntity repairShopEntity) {
+        String regionNumber = repairShopEntity.getRegionNumber();
+        QueryWrapper<RepairShopEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("region_number",regionNumber);
+        List<RepairShopEntity> list = repairShopService.list(queryWrapper);
+        if (list.size()>0) {
+            return R.ok().put("list",list);
+        }
+        return R.error("查询信息不存在");
     }
 
 
@@ -53,30 +71,30 @@ public class RepairShopController {
      * 保存
      */
     @PostMapping("/save")
-    public R save(@RequestBody RepairShopEntity repairShop){
+    public R save(RepairShopEntity repairShop){
 		repairShopService.save(repairShop);
 
         return R.ok();
     }
-
-    /**
-     * 修改
-     */
-    @PutMapping("/update")
-    public R update(@RequestBody RepairShopEntity repairShop){
-		repairShopService.updateById(repairShop);
-
-        return R.ok();
-    }
-
-    /**
-     * 删除
-     */
-    @DeleteMapping("/delete")
-    public R delete(@RequestBody Integer[] shopIds){
-		repairShopService.removeByIds(Arrays.asList(shopIds));
-
-        return R.ok();
-    }
+//
+//    /**
+//     * 修改
+//     */
+//    @PutMapping("/update")
+//    public R update(@RequestBody RepairShopEntity repairShop){
+//		repairShopService.updateById(repairShop);
+//
+//        return R.ok();
+//    }
+//
+//    /**
+//     * 删除
+//     */
+//    @DeleteMapping("/delete")
+//    public R delete(@RequestBody Integer[] shopIds){
+//		repairShopService.removeByIds(Arrays.asList(shopIds));
+//
+//        return R.ok();
+//    }
 
 }

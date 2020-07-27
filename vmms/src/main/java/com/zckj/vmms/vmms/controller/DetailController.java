@@ -7,10 +7,15 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 
 /**
@@ -22,7 +27,7 @@ import java.util.Arrays;
  */
 @RestController
 @RequestMapping("vmms/detail")
-@Api(tags = "维修清单详情接口")
+@Api(tags = "维修清单接口")
 public class DetailController {
 
     @Autowired
@@ -32,13 +37,13 @@ public class DetailController {
      * 修改
      */
     @PutMapping(value = "/update", produces = {"application/json;charset=UTF-8"})
-    @ApiOperation(value = "根据维修清单id更新")
+    @ApiOperation(value = "根据维修清单主键detailId更新")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "detailId", value = "主键", dataType = "Integer"),
             @ApiImplicitParam(name = "item", value = "项目名称", dataType = "String"),
             @ApiImplicitParam(name = "itemBill", value = "项目费用", dataType = "BigDecimal")
     })
-    public R update(/*@RequestBody*/ DetailEntity detail) {
+    public R updateDetail(DetailEntity detail) {
         boolean flag = detailService.updateById(detail);
 
         if (flag) {
@@ -63,7 +68,7 @@ public class DetailController {
      * 信息
      */
     @GetMapping("/info/{detailId}")
-    public R info(@PathVariable("detailId") Integer detailId) {
+    public R infoDetail(@PathVariable("detailId") Integer detailId) {
         DetailEntity detail = detailService.getById(detailId);
 
         return R.ok().put("detail", detail);
@@ -73,11 +78,11 @@ public class DetailController {
     /**
      * 删除
      */
-    @DeleteMapping("/delete")
-    public R delete(@RequestBody Integer[] detailIds) {
-        detailService.removeByIds(Arrays.asList(detailIds));
-
-        return R.ok();
-    }
+//    @DeleteMapping("/delete")
+//    public R delete(@RequestBody Integer[] detailIds) {
+//        detailService.removeByIds(Arrays.asList(detailIds));
+//
+//        return R.ok();
+//    }
 
 }

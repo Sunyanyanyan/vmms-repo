@@ -3,6 +3,7 @@ package com.zckj.vmms.vmms.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zckj.vmms.utils.PageUtils;
 import com.zckj.vmms.vmms.entity.DetailEntity;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.util.Map;
 
@@ -15,7 +16,10 @@ import java.util.Map;
  */
 public interface DetailService extends IService<DetailEntity> {
 
-//    void testByWrapper();
+    /**
+     * 导出excel
+     */
+//    XSSFWorkbook show();
 
     PageUtils queryPage(Map<String, Object> params);
 

@@ -1,4 +1,4 @@
-package com.zckj.vmms.vmms.entity;
+package com.zckj.vmms.vmms.vo;
 
 import lombok.Data;
 import lombok.ToString;

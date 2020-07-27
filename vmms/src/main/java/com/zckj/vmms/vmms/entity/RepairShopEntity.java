@@ -33,14 +33,17 @@ public class RepairShopEntity implements Serializable {
 	/**
 	 * 维修厂所属单位
 	 */
-	private String shopRegion;
+	@ApiModelProperty(name = "regionNumber", value = "维修厂所属单位", dataType = "String")
+	private String regionNumber;
 	/**
 	 * 维修厂地址
 	 */
+	@ApiModelProperty(name = "shopAddress", value = "维修厂地址", dataType = "String")
 	private String shopAddress;
 	/**
 	 * 维修厂名称
 	 */
+	@ApiModelProperty(name = "shopName", value = "维修厂名称", dataType = "String")
 	private String shopName;
 	/**
 	 * 经度

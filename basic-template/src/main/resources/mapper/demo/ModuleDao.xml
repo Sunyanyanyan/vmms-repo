@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zckj.demo.dao.ModuleDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.zckj.demo.entity.ModuleEntity" id="moduleMap">
+        <result property="moduleid" column="MODULEID"/>
+        <result property="modulename" column="MODULENAME"/>
+        <result property="filename" column="FILENAME"/>
+        <result property="formname" column="FORMNAME"/>
+        <result property="ordid" column="ORDID"/>
+        <result property="parent" column="PARENT"/>
+        <result property="grade" column="GRADE"/>
+        <result property="icon" column="ICON"/>
+    </resultMap>
+
+
+</mapper>

@@ -2,11 +2,17 @@ package com.zckj.vmms.vmms.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.zckj.vmms.utils.NetUtil;
-import com.zckj.vmms.vmms.entity.Oauth2Token;
-import com.zckj.vmms.vmms.entity.WeChatUserEntity;
+import com.zckj.vmms.utils.R;
+import com.zckj.vmms.vmms.vo.Oauth2Token;
+import com.zckj.vmms.vmms.entity.OrgEntity;
+import com.zckj.vmms.vmms.vo.WeChatUserEntity;
+import com.zckj.vmms.vmms.service.OrgService;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,10 +22,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/wechat")
+@ApiIgnore
 @Slf4j
 public class WeChatController {
 
-//    private static Logger log = LoggerFactory.getLogger(WeChatController.class);
+    @Autowired
+    private OrgService orgService;
 
     private static final String APP_ID = "wx530cdb581ccd5af7";
 
@@ -33,6 +41,19 @@ public class WeChatController {
 //    private static final String URL_LOGIN = "https://自己的域名/wechat/hello";
     private static final String URL_LOGIN = "http://wechat.vmms.nat123.net/wechat/hello";
 
+    //公司
+//    private static final String APP_ID = "wx445594e0460bc71d";
+//
+//    private static final String APP_SECRET = "a79713b12016bf1a10752a5f36b3dcbb";
+//
+//    //回调地址，要跟下面的地址能调通（/wxLogin）
+////    private static final String BACK_URL = "https://自己的域名/wechat/wechat/wxLogin";
+//    private static final String BACK_URL = "http://wechat.vmms.nat123.net/wechat/wxLogin";
+//
+//    //登录成功回调地址（返回你指定的地址）
+////    private static final String URL_LOGIN = "https://自己的域名/wechat/hello";
+//    private static final String URL_LOGIN = "http://wechat.vmms.nat123.net/wechat/hello";
+
     @RequestMapping("/hello")
     public String hello() {
         return "hello";
@@ -41,14 +62,13 @@ public class WeChatController {
     /**
      * 向指定 URL 发送 GET 方法的请求
      * URL 所代表远程资源的响应结果
-     * @param request
-     * @param response
      *
-     * 用户同意授权，获取 code
+     * @param request
+     * @param response 用户同意授权，获取 code
      * @throws IOException
      */
     @RequestMapping("/wxLoginInit")
-    public void loginInt(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void loginInit(HttpServletRequest request, HttpServletResponse response) throws IOException {
         log.info("微信授权登录...");
         String url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="
                 + APP_ID
@@ -56,19 +76,23 @@ public class WeChatController {
                 + URLEncoder.encode(BACK_URL, "UTF-8")
                 + "&response_type=code"
                 + "&scope=snsapi_userinfo"
-                + "&state=STATE#wechat_redirect" ;
+                + "&state=STATE#wechat_redirect";
         //重定向到重定向地址
         response.sendRedirect(url);
     }
 
-    @RequestMapping("/wxLogin")
-    public void wxLogin(HttpServletRequest request, HttpServletResponse response) {
+
+    @RequestMapping(value = "/wxLogin", produces = {"application/json;charset=UTF-8"})
+    @ApiOperation(value = "微信用户登录授权")
+    public R wxLogin(HttpServletRequest request, HttpServletResponse response) {
         log.info("用户同意授权,重定向到重定向地址,获取 code");
 
         String code = request.getParameter("code");
         log.info("code:" + code);
         String appId = APP_ID;
         String appSecret = APP_SECRET;
+
+        String applicantId = null;
         try {
             // 获取网页授权 access_token openid 等
             Oauth2Token oauth2Token = getOauth2Token(appId, appSecret, code);
@@ -80,26 +104,29 @@ public class WeChatController {
             WeChatUserEntity weChatUser = getWxUserInfo(accessToken, openId);
 
             // 具体业务 start
-            // 具体有业务需求
-            // ...
-            log.info(oauth2Token.toString());
-            log.info(weChatUser.toString());
-            //  ...
+            // 具体业务需求
+            OrgEntity orgEntity = new OrgEntity();
+            orgEntity.setApplicantId("1");
+            orgEntity.setApplicantName("李四");
+            orgEntity.setOpenId(weChatUser.getOpenId());
+            orgService.updateById(orgEntity);
+            applicantId = orgEntity.getApplicantId();
             // 具体业务 end
 
             // 授权登录成功后，跳转到指定的链接
             response.sendRedirect(URL_LOGIN);
-        }catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             log.error("网络异常");
         }
+        return R.ok().put("applicantId", applicantId);
     }
 
     /**
      * 通过网页授权获取用户信息
      *
      * @param accessToken 网页授权接口调用凭证
-     * @param openId 用户标识
+     * @param openId      用户标识
      * @return
      */
     private WeChatUserEntity getWxUserInfo(String accessToken, String openId) {
@@ -134,11 +161,11 @@ public class WeChatController {
                 wxUserInfo.setPrivilegeList(list);
                 //与开放平台公用的唯一标识，只有在用户将公众号绑定到微信开放平台账号后，才会出现该字段
                 wxUserInfo.setUnionid(jsonObject.getString("unionid"));
-            }catch (Exception e) {
+            } catch (Exception e) {
                 wxUserInfo = null;
                 int errorCode = jsonObject.getInteger("errcode");
                 String errorMsg = jsonObject.getString("errmsg");
-                log.error("获取用户信息失败  errcode:{} errmsg:{}",errorCode,errorMsg);
+                log.error("获取用户信息失败  errcode:{} errmsg:{}", errorCode, errorMsg);
             }
         }
 
@@ -148,7 +175,8 @@ public class WeChatController {
 
     /**
      * 获取网页授权凭证
-     * @param appId 公众账号的唯一标识
+     *
+     * @param appId     公众账号的唯一标识
      * @param appSecret 公众账号的密钥
      * @param code
      * @return
@@ -167,9 +195,9 @@ public class WeChatController {
         log.info("拼接后的请求地址为:" + requestUrl);
 
         //获取网页授权凭证
-        com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject (NetUtil.get(requestUrl));
+        com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject(NetUtil.get(requestUrl));
 
-        if(null != jsonObject) {
+        if (null != jsonObject) {
             try {
                 auth = new Oauth2Token();
                 auth.setAccessToken(jsonObject.getString("access_token"));
@@ -177,11 +205,11 @@ public class WeChatController {
                 auth.setRefreshToken("refresh_token");
                 auth.setOpenId("openid");
                 auth.setScope("scope");
-            }catch(Exception e) {
+            } catch (Exception e) {
                 auth = null;
                 int errorCode = jsonObject.getInteger("errcode");
                 String errorMsg = jsonObject.getString("errmsg");
-                log.error("获取网页授权凭证失败 errcode:{} errmsg:{}",errorCode,errorMsg);
+                log.error("获取网页授权凭证失败 errcode:{} errmsg:{}", errorCode, errorMsg);
             }
         }
 

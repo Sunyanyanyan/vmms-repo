@@ -1,27 +1,24 @@
 package com.zckj.vmms.vmms.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zckj.vmms.utils.IdUtil;
-import com.zckj.vmms.utils.R;
-import com.zckj.vmms.vmms.dao.OrderDao;
+import com.zckj.vmms.utils.PageUtils;
+import com.zckj.vmms.utils.Query;
+import com.zckj.vmms.vmms.dao.DetailDao;
+import com.zckj.vmms.vmms.entity.DetailEntity;
 import com.zckj.vmms.vmms.entity.OrderEntity;
+import com.zckj.vmms.vmms.service.DetailService;
+import org.apache.poi.ss.usermodel.RichTextString;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zckj.vmms.utils.PageUtils;
-import com.zckj.vmms.utils.Query;
-
-import com.zckj.vmms.vmms.dao.DetailDao;
-import com.zckj.vmms.vmms.entity.DetailEntity;
-import com.zckj.vmms.vmms.service.DetailService;
-
-import javax.annotation.PostConstruct;
 
 
 @Service("detailService")
@@ -30,14 +27,6 @@ public class DetailServiceImpl extends ServiceImpl<DetailDao, DetailEntity> impl
     @Autowired
     private DetailDao detailDao;
 
-
-//    public void testByWrapper() {
-//        QueryWrapper<DetailEntity> queryWrapper = new QueryWrapper<DetailEntity>();
-//        queryWrapper.lambda().eq(DetailEntity::getItem, "轮胎")
-//                .eq(DetailEntity::getOrderId, 202000005);
-//
-//        List<DetailEntity> detail = detailDao.selectDetail(queryWrapper);
-//    }
 
     @Override
     public int saveDetail(DetailEntity detail) {
@@ -55,6 +44,34 @@ public class DetailServiceImpl extends ServiceImpl<DetailDao, DetailEntity> impl
 
         return detailDao.insert(detail);
     }
+
+    /**
+     * 导出excel
+     * @return
+     */
+/*    @Override
+    public XSSFWorkbook show() {
+        List<DetailEntity> list = detailDao.selectList(null);//查出数据库数据
+        XSSFWorkbook wb = new XSSFWorkbook();
+        Sheet sheet = wb.createSheet("维修清单");//创建一张表
+        Row titleRow = sheet.createRow(0);//创建第一行，起始为0
+        titleRow.createCell(0).setCellValue("序号");//第一列
+        titleRow.createCell(1).setCellValue("ID");
+        titleRow.createCell(2).setCellValue("所属工单编号");
+        titleRow.createCell(3).setCellValue("项目名称");
+//        titleRow.createCell(4).setCellValue("项目费用");
+        int cell = 1;
+        for (DetailEntity detailEntity : list) {
+            Row row = sheet.createRow(cell);//从第二行开始保存数据
+            row.createCell(0).setCellValue(cell);
+            row.createCell(1).setCellValue(detailEntity.getDetailId());//将数据库的数据遍历出来
+            row.createCell(2).setCellValue(detailEntity.getOrderId());
+            row.createCell(3).setCellValue(detailEntity.getItem());
+//            row.createCell(4).setCellValue((RichTextString) detailEntity.getItemBill());
+            cell++;
+        }
+        return wb;
+    }*/
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {

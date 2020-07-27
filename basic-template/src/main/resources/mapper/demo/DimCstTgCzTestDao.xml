@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zckj.demo.dao.DimCstTgCzTestDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.zckj.demo.entity.DimCstTgCzTestEntity" id="dimCstTgCzTestMap">
+        <result property="tgId" column="tg_id"/>
+        <result property="tgOrgNo" column="tg_org_no"/>
+        <result property="tgOrgNm" column="tg_org_nm"/>
+        <result property="contyOrgNo" column="conty_org_no"/>
+        <result property="contyOrgNm" column="conty_org_nm"/>
+        <result property="cityOrgNo" column="city_org_no"/>
+        <result property="cityOrgNm" column="city_org_nm"/>
+        <result property="provcOrgNo" column="provc_org_no"/>
+        <result property="provcOrgNm" column="provc_org_nm"/>
+        <result property="tgNo" column="tg_no"/>
+        <result property="tgNm" column="tg_nm"/>
+        <result property="cap" column="cap"/>
+        <result property="instAddr" column="inst_addr"/>
+        <result property="chgTm" column="chg_tm"/>
+        <result property="pubPrivFlg" column="pub_priv_flg"/>
+        <result property="pubPrivDsc" column="pub_priv_dsc"/>
+        <result property="runSt" column="run_st"/>
+        <result property="runStDsc" column="run_st_dsc"/>
+        <result property="lineNo" column="line_no"/>
+        <result property="lineNm" column="line_nm"/>
+        <result property="pmsLineId" column="pms_line_id"/>
+        <result property="stdTgOrgNo" column="std_tg_org_no"/>
+        <result property="stdTgOrgNm" column="std_tg_org_nm"/>
+        <result property="stdContyOrgNo" column="std_conty_org_no"/>
+        <result property="stdContyOrgNm" column="std_conty_org_nm"/>
+        <result property="stdCityOrgNo" column="std_city_org_no"/>
+        <result property="stdCityOrgNm" column="std_city_org_nm"/>
+        <result property="stdProvcOrgNo" column="std_provc_org_no"/>
+        <result property="stdProvcOrgNm" column="std_provc_org_nm"/>
+        <result property="dataDt" column="data_dt"/>
+        <result property="etlTm" column="etl_tm"/>
+    </resultMap>
+
+
+</mapper>

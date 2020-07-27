@@ -56,23 +56,18 @@ public class OrderEntity implements Serializable {
 	/**
 	 * 申请人姓名（自动获取）
 	 */
-	@ApiModelProperty(name = "name", value = "申请人姓名", dataType = "String")
-	private String name;
+	@ApiModelProperty(name = "applicantName", value = "申请人姓名", dataType = "String")
+	private String applicantName;
 	/**
 	 * 申请人编号（自动获取）
 	 */
-	@ApiModelProperty(name = "applicantNumber", value = "申请人编号", dataType = "String")
-	private String applicantNumber;
+	@ApiModelProperty(name = "applicantId", value = "申请人编号", dataType = "String")
+	private String applicantId;
 	/**
 	 * 状态[待审批；不同意；待修理；修理中；修理完成]
 	 */
 	@ApiModelProperty(name = "status", value = "状态[待审批；不同意；待修理；修理中；修理完成]", dataType = "String")
 	private String status;
-	/**
-	 * 维修性质[可选：保养、维修、装饰、其他]
-	 */
-	@ApiModelProperty(name = "attribute", value = "维修性质[保养、维修、装饰、其他]", dataType = "String")
-	private String attribute;
 	/**
 	 * 维修前照片
 	 */
@@ -89,10 +84,15 @@ public class OrderEntity implements Serializable {
 	@ApiModelProperty(name = "damageImgUrl", value = "损坏件照片", dataType = "String")
 	private String damageImgUrl;
 	/**
+	 * 维修性质[可选：保养、维修、装饰、其他]
+	 */
+	@ApiModelProperty(name = "repairNature", value = "维修性质[保养、维修、装饰、其他]", dataType = "String")
+	private String repairNature;
+	/**
 	 * 故障描述（非必填）
 	 */
-	@ApiModelProperty(name = "description", value = "故障描述（非必填）", dataType = "String")
-	private String description;
+	@ApiModelProperty(name = "repairDesc", value = "故障描述（非必填）", dataType = "String")
+	private String repairDesc;
 	/**
 	 * 维修开始时间
 	 */

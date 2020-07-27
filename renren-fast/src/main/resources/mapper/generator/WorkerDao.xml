@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.generator.dao.WorkerDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.modules.generator.entity.WorkerEntity" id="workerMap">
+        <result property="orgno" column="ORGNO"/>
+        <result property="workerid" column="WORKERID"/>
+        <result property="workername" column="WORKERNAME"/>
+        <result property="code" column="CODE"/>
+        <result property="pwd" column="PWD"/>
+        <result property="roleid" column="ROLEID"/>
+        <result property="idcard" column="IDCARD"/>
+        <result property="tele" column="TELE"/>
+        <result property="state" column="STATE"/>
+        <result property="gw" column="GW"/>
+        <result property="wgno" column="WGNO"/>
+        <result property="home" column="HOME"/>
+        <result property="sms" column="SMS"/>
+    </resultMap>
+
+    <!-- 查询操作员的所有模块ID -->
+    <select id="queryAllMenuId" resultType="string">
+		select distinct ROLE.MODULEID from WORKER
+			LEFT JOIN ROLE on WORKER.ROLEID = ROLE.ROLEID
+		where WORKER.WORKERID = #{workerid}
+	</select>
+
+    <!-- 操作员 -->
+    <select id="getByWorkerId" parameterType="string" resultType="io.renren.modules.generator.entity.WorkerEntity">
+		select orgno,workerid,workername,code,idcard,tele,state,gw,wgno from worker where workerid= #{workerid}
+	</select>
+    <insert id="insertWorker" parameterType="io.renren.modules.generator.entity.WorkerEntity">
+        insert into worker values
+		(#{orgno},#{workerid},#{workername},#{code},#{pwd},#{roleid},#{idcard},#{tele},#{state},#{gw},#{wgno},#{home},#{sms})
+    </insert>
+
+    <update id="updateWorker" parameterType="io.renren.modules.generator.entity.WorkerEntity">
+		update worker set orgno = #{orgno}, workername = #{workername},code =
+		#{code},
+		roleid = #{roleid},idcard = #{idcard} , tele = #{tele} , state = #{state}, gw = #{gw} , wgno = #{wgno}, home = #{home}, sms = #{sms}
+		where workerid = #{workerid}
+	</update>
+    <select id="maxWorkerid" resultType="string">
+		select lpad(nvl(max(workerid),0)+1 ,4,'0') workerid from worker
+	</select>
+    <select id="queryByUserName" resultType="io.renren.modules.generator.entity.WorkerEntity">
+        		select * from worker where CODE= #{code}
+    </select>
+
+<!--mapper/sys/SysUserRoleDao.xml-->
+<!--    <delete id="deleteBatch">-->
+<!--        delete from sys_user_role where role_id in-->
+<!--        <foreach item="roleId" collection="array" open="(" separator="," close=")">-->
+<!--            #{roleId}-->
+<!--        </foreach>-->
+<!--    </delete>-->
+
+<!--    <select id="queryRoleIdList" resultType="long">-->
+<!--		select role_id from sys_user_role where user_id = #{value}-->
+<!--	</select>-->
+
+</mapper>
